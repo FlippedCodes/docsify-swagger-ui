@@ -30,7 +30,7 @@ You can install the plugin by using the link below in your `index.html`.
 For production, please use the numbered version to prevent breaking changes in production.
 
 ``` html
-<script src="https://unpkg.com/docsify-swagger-ui@1.0.1/dist/index.min.js"></script>
+<script src="https://unpkg.com/docsify-swagger-ui@1.0.2/dist/index.min.js"></script>
 ```
 
 ### Development
