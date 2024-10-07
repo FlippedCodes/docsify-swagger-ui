@@ -1,4 +1,4 @@
-// code inspiration from https://github.com/swagger-api/swagger-ui/blob/HEAD/docs/usage/installation.md#unpkg
+// code inspiration from https://github.com/swagger-api/swagger-ui/blob/d1111837388816f0b68f27a1a0d6a6f37841b697/docs/usage/installation.md#unpkg
 function swaggerUiPlugin(hook, vm) {
   hook.doneEach(() => {
     // get dom and set info
