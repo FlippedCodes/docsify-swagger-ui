@@ -7,6 +7,7 @@ on:
         description: 'Release type (one of): patch, minor, major, prepatch, preminor, premajor, prerelease'
         required: true
 
+# Script from https://superface.ai/blog/npm-publish-gh-actions-changelog
 jobs:
   release:
     runs-on: ubuntu-latest
