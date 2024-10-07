@@ -1,4 +1,4 @@
-# Better Embed
+# docsify.js Swagger-UI
 
 A docsify.js plugin to embed Swagger-UI to view OpenAPI docs.
 
