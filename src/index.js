@@ -6,7 +6,7 @@ function swaggerUiPlugin(hook, vm) {
     const linkElement = document.querySelector('p a');
     const swaggerScriptUrl = 'https://unpkg.com/swagger-ui-dist@5.11.0/swagger-ui-bundle.js'
     const cssLinks = [
-      '/style.min.css',
+      'https://unpkg.com/docsify-swagger-ui@1.0.1/dist/style.min.css',
       'https://unpkg.com/swagger-ui-dist@5.11.0/swagger-ui.css'
     ];
     // test if link is a swagger link
