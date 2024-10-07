@@ -1,6 +1,6 @@
 {
   "name": "docsify-swagger-ui",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A docsify.js plugin to embed Swagger-UI to view OpenAPI docs.",
   "main": "src/index.js",
   "repository": {
