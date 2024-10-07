@@ -1,17 +1,36 @@
 # Better Embed
 
-A docsify.js plugin to embed selective areas from another markdown file.
+A docsify.js plugin to embed Swagger-UI to view OpenAPI docs.
+
+## Screenshots
+
+### Overview
+
+![overview-dark](/_media/overview_dark.png#gh-dark-mode-only)
+![overview-light](/_media/overview_light.png#gh-light-mode-only)
+
+### Models
+
+![models-dark](/_media/models_dark.png#gh-dark-mode-only)
+![models-light](/_media/models_light.png#gh-light-mode-only)
+
+> [!Note]
+> If you look for a more Markdown-like approach, feel free to have a look at [coolerfall's docsify-swagger plugin](https://github.com/coolerfall/docsify-swagger).
+
+## Prerequisites
+
+This plugin is build with [docsify-themeable](https://jhildenbiddle.github.io/docsify-themeable/#/) in mind. Make sure you have it installed, otherwise the CSS fixes might not get applied.
 
 ## Installation
 
-How to install this plugin.
+You can install the plugin by using the link below in your `index.html`.
 
 ### Production
 
 For production, please use the numbered version to prevent breaking changes in production.
 
 ``` html
-<script src="https://unpkg.com/docsify-betterembed@1.1.1/dist/betterEmbed.min.js"></script>
+<script src="https://unpkg.com/docsify-swagger-ui@1.0.0/dist/index.min.js"></script>
 ```
 
 ### Development
@@ -19,66 +38,32 @@ For production, please use the numbered version to prevent breaking changes in p
 If you are developing on a doc, you can use the latest. Make sure you switch it to production later, or the production one right away.
 
 ``` html
-<script src="https://unpkg.com/docsify-betterembed@latest/dist/betterEmbed.min.js"></script>
+<script src="https://unpkg.com/docsify-swagger-ui@latest/dist/index.min.js"></script>
 ```
 
 ## Usage
 
 > [!NOTE]
-> Sorry for not providing a demo, but I thought this is a very self explanatory setup. But I am using this activly in [another projects](https://github.com/FlippedCodes/Unofficial-Resonite-Docs/blob/c92cd4baf050c3316924b4af71ec59b9defaef66/gameplay/botCommands.md?plain=1#L78).
+> Sorry for not providing a demo, but I thought this is a very self explanatory setup.
 
 ### Basic instructions
 
-1. Surround the part you want *to embed* in the following comment:
+1. Create a markdown file
+
+2. Add a link to some OpenAPI and name it "swagger"
 
    ``` markdown
-   <!-- embed:start:exampleName -->
-
-   YOUR CONTENT HERE
-
-   <!-- embed:end:exampleName -->
+   [swagger](https://petstore.swagger.io/v2/swagger.json)
    ```
 
-> [!IMPORTANT]
-> Make sure you respect the spaces between the comments and your content. It can mess with the html (specifically tables), if they are left out.
-
-2. Embed the content like this:
-
-   ``` markdown
-   [Some Name](path/to/markdown/file/with/embed.md#exampleName ':include')
-   ```
-
---> The link will then be replaced with the content.
-If it doesn't the selector, it will embed the whole page. Aka, you might have done something wrong.
+--> The link will then be replaced with the content. Multiple swagger-links are not supported.
 
 ### Tips
 
-- Setup 2 just converts to a different text, you can also use this to keep the link for Markdown, vanilla-feeling:
-  
-  ``` markdown
-  <!-- embedImport:start:exampleName -->
-  [Some Name](path/to/markdown/file/with/embed.md ':include')
-  <!-- embedImport:end:exampleName -->
-  ```
+- The link can be also a local file or an api endpoint (as long as it returns JSON).
 
-- Because the selector is what decides the beginning and the end, you can nest and overlay the embed selections, however you like it.
-
-  ``` markdown
-  <!-- embed:start:expl3 -->
-  <!-- embed:start:expl1 -->
-
-  Very original stuff.
-
-  <!-- embed:start:expl2 -->
-
-  Oh, So much content
-
-  <!-- embed:end:expl1 -->
-
-  uhm.. hows your day?
-
-  <!-- embed:end:expl2 -->
-  <!-- embed:end:expl3 -->
+  ```markdown
+  [swagger](/_media/swagger.json)
   ```
 
 ## Contributing
@@ -89,10 +74,8 @@ I'm always happy, if someone has improvements to this little plugin. If you want
 
 Nothing much here, but I'm planning to add the following features at some point:
 
-- [ ] Support for [docsify-mustache](https://docsify-mustache.github.io) so Docsify can have proper templating.
-- [ ] Being able to use header as a selector and not use comments to mark the start and end.
-- [ ] Offset header levels to either fit the current layout, or being able to select it.
-- [ ] Rewrite links to point at their embeded version (eg. Youtube)
+- [ ] Cleanup the CSS and combine rules better
+- [ ] Remove the dependency for [docsify-themeable](https://jhildenbiddle.github.io/docsify-themeable/#/)
 
 ## License
 
