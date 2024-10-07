@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/FlippedCodes/docsify-betterembed.git"
+    "url": "git+https://github.com/FlippedCodes/docsify-swagger-ui.git"
   },
   "keywords": [
     "docsify",
