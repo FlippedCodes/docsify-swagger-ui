@@ -50,7 +50,7 @@ If you are developing on a doc, you can use the latest. Make sure you switch it 
 
 1. Create a markdown file
 
-2. Add a link to some OpenAPI and name it "swagger"
+2. Add a link to some OpenAPI doc and name it "swagger"
 
    ``` markdown
    [swagger](https://petstore.swagger.io/v2/swagger.json)
