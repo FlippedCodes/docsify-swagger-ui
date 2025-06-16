@@ -1,86 +1,54 @@
-# docsify.js Swagger-UI
+# docsify-swagger-ui
 
-A docsify.js plugin to embed Swagger-UI to view OpenAPI docs.
+Embed [Swagger-UI](https://swagger.io/tools/swagger-ui/) inside your Docsify documentation with a single link.
 
-## Screenshots
+## Highlights
 
-### Overview
+- **Isolated styling** — Swagger-UI is loaded in a sandboxed `iframe`, so its CSS never leaks into your Docsify theme (and vice-versa).
+- **Theme-agnostic** — Works with any official or custom Docsify theme, with or without [docsify-themeable](https://jhildenbiddle.github.io/docsify-themeable/).
+- **Zero configuration** — Replace a Markdown link whose text is exactly `swagger` and the plugin does the rest.
 
-![overview-dark](/_media/overview_dark.png#gh-dark-mode-only)
-![overview-light](/_media/overview_light.png#gh-light-mode-only)
+## Quick start
 
-### Models
+1. Include the script in `index.html`:
 
-![models-dark](/_media/models_dark.png#gh-dark-mode-only)
-![models-light](/_media/models_light.png#gh-light-mode-only)
+   ```html
+   <script src="https://unpkg.com/docsify-swagger-ui@2.0.4/dist/index.min.js"></script>
+   ```
 
-> [!Note]
-> If you look for a more Markdown-like approach, feel free to have a look at [coolerfall's docsify-swagger plugin](https://github.com/coolerfall/docsify-swagger).
+2. Add a Markdown link to your OpenAPI definition:
 
-## Prerequisites
-
-This plugin is build with [docsify-themeable](https://jhildenbiddle.github.io/docsify-themeable/#/) in mind. Make sure you have it installed, otherwise the CSS fixes might not get applied.
-
-## Installation
-
-You can install the plugin by using the link below in your `index.html`.
-
-### Production
-
-For production, please use the numbered version to prevent breaking changes in production.
-
-``` html
-<script src="https://unpkg.com/docsify-swagger-ui@2.0.3/dist/index.min.js"></script>
-```
-
-### Development
-
-If you are developing on a doc, you can use the latest. Make sure you switch it to production later, or the production one right away.
-
-``` html
-<script src="https://unpkg.com/docsify-swagger-ui@latest/dist/index.min.js"></script>
-```
-
-## Usage
-
-> [!NOTE]
-> Sorry for not providing a demo, but I thought this is a very self explanatory setup.
-
-### Basic instructions
-
-1. Create a markdown file
-
-2. Add a link to some OpenAPI doc and name it "swagger"
-
-   ``` markdown
+   ```markdown
    [swagger](https://petstore.swagger.io/v2/swagger.json)
    ```
 
---> The link will then be replaced with the content. Multiple swagger-links are not supported.
+   At run-time the link is replaced by a fully-featured Swagger-UI instance.
 
 ### Tips
 
-- The link can be also a local file or an api endpoint (as long as it returns JSON).
+- Local files work as well: `[swagger](/_media/openapi.json)`
+- Only one Swagger-UI instance is supported per page.
 
-  ```markdown
-  [swagger](/_media/swagger.json)
-  ```
+## Installation options
+
+| Environment | Snippet                                                                                 |
+| ----------- | --------------------------------------------------------------------------------------- |
+| Production  | `<script src="https://unpkg.com/docsify-swagger-ui@2.0.4/dist/index.min.js"></script>`  |
+| Development | `<script src="https://unpkg.com/docsify-swagger-ui@latest/dist/index.min.js"></script>` |
+
+## Screenshots
+
+![overview](/_media/overview.png#gh-mode-only)
+
+![models](/_media/models.png#gh-mode-only)
 
 ## Contributing
 
-I'm always happy, if someone has improvements to this little plugin. If you want to help, anything goes, but preferred is what is on the roadmap below or maybe discuss it as a GitHub issue first. ^^
-
-### Roadmap
-
-Nothing much here, but I'm planning to add the following features at some point:
-
-- [ ] Cleanup the CSS and combine rules better
-- [ ] Remove the dependency for [docsify-themeable](https://jhildenbiddle.github.io/docsify-themeable/#/)
+Found a bug or have an idea? Feel free to open an issue or submit a pull request.
 
 ## License
 
-This repo is using the [MIT license](LICENSE).
-
+[MIT](LICENSE)
 ## Credit
 
 Thanks to the [docsify.js](https://docsify.js.org/#/) team to make writing plugins so simple. I usually don't front end, but this was a breeze to get working.

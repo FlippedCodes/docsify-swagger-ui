@@ -1,57 +1,73 @@
-// code inspiration from https://github.com/swagger-api/swagger-ui/blob/d1111837388816f0b68f27a1a0d6a6f37841b697/docs/usage/installation.md#unpkg
-function swaggerUiPlugin(hook, vm) {
+/**
+ * Docsify plugin that replaces a Markdown link whose text is exactly "swagger"
+ * with an isolated Swagger-UI instance loaded in an iframe.
+ */
+function swaggerUiPlugin(hook) {
+  let iframeRef;
+
   hook.doneEach(() => {
-    // get dom and set info
-    const html = document.querySelector('main section article');
-    const linkElement = document.querySelector('p a');
-    const swaggerScriptUrl = 'https://unpkg.com/swagger-ui-dist@5.11.0/swagger-ui-bundle.js'
-    const cssLinks = [
-      'https://unpkg.com/docsify-swagger-ui@2.0.3/dist/style.min.css',
-      'https://unpkg.com/swagger-ui-dist@5.11.0/swagger-ui.css'
-    ];
-    // test if link is a swagger link
-    if (!(linkElement && linkElement.textContent === 'swagger')) {
-      cssLinks.forEach((cssLink) => {
-        const foundCss = document.head.querySelector(`[href='${cssLink}']`);
-        if (foundCss) foundCss.remove();
-      });
-      const foundScript = document.body.querySelector(`[src='${swaggerScriptUrl}']`);
-      if (foundScript) foundScript.remove();
+    const markdownSection = document.querySelector(".markdown-section");
+    if (!markdownSection) return;
+
+    const linkElement = Array.from(markdownSection.querySelectorAll("a")).find(
+      (a) => a.textContent.trim().toLowerCase() === "swagger"
+    );
+
+    // Cleanup when leaving a page containing Swagger-UI
+    if (!linkElement) {
+      if (iframeRef) {
+        iframeRef.remove();
+        iframeRef = null;
+      }
       return;
     }
 
-    // create swagger script tag
-    const swaggerScript = document.createElement('script');
-    swaggerScript.src = swaggerScriptUrl;
-    // add css - top link has priority
-    cssLinks.forEach((cssLink) => {
-      const swaggerCss = document.createElement('link');
-      swaggerCss.rel = 'stylesheet';
-      swaggerCss.href = cssLink;
-      document.head.prepend(swaggerCss);
-    });
+    iframeRef?.remove();
 
-    // create place for swagger to populate and delete link
-    const swaggerContentDiv = document.createElement('div');
-    swaggerContentDiv.id = 'swagger-ui';
-    html.appendChild(swaggerContentDiv);
+    const specUrl = linkElement.href;
+    const parent = linkElement.parentElement;
     linkElement.remove();
+    if (parent?.tagName === "P" && parent.childElementCount === 0)
+      parent.remove();
 
-    // remove "#/" if local link. 
-    const baseURL = linkElement.baseURI.split('/#')[0];
-    const linkParsed = linkElement.href.includes(baseURL) ? linkElement.href.replace('#/', '') : linkElement.href;
+    iframeRef = document.createElement("iframe");
+    Object.assign(iframeRef.style, {
+      width: "100%",
+      border: "none",
+      minHeight: "90vh", // let the user scroll inside Docsify
+    });
+    iframeRef.loading = "lazy";
 
-    // create hook and wait for script load 
-    swaggerScript.onload = () => {
-      document = SwaggerUIBundle({
-        url: linkParsed,
-        dom_id: '#swagger-ui',
-      });
-    };
-    // load swagger-ui script
-    document.body.appendChild(swaggerScript);
+    const escapeHtml = (str) =>
+      str
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+
+    const swaggerVersion = "latest";
+
+    iframeRef.srcdoc = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Swagger UI</title>
+  <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@${swaggerVersion}/swagger-ui.css" />
+  <style>html,body{margin:0;padding:0;height:100%;}#swagger-ui{height:100%}</style>
+</head>
+<body>
+  <div id="swagger-ui"></div>
+  <script src="https://unpkg.com/swagger-ui-dist@${swaggerVersion}/swagger-ui-bundle.js"><\/script>
+  <script>window.onload = function(){SwaggerUIBundle({url:'${escapeHtml(
+    specUrl
+  )}',dom_id:'#swagger-ui',presets:[SwaggerUIBundle.presets.apis],layout:'BaseLayout'});}<\/script>
+</body>
+</html>`;
+
+    markdownSection.appendChild(iframeRef);
   });
 }
-// Add plugin to docsify's plugin array
+
 window.$docsify = window.$docsify || {};
 $docsify.plugins = [swaggerUiPlugin, ...($docsify.plugins || [])];

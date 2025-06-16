@@ -14,6 +14,14 @@
     "embed",
     "better embed"
   ],
-  "author": "phil",
-  "license": "MIT"
+  "author": "phil, annael.moussa",
+  "license": "MIT",
+  "scripts": {
+    "build": "npm run build:js",
+    "build:js": "esbuild src/index.js --bundle --minify --outfile=dist/index.min.js",
+    "prepare": "npm run build"
+  },
+  "devDependencies": {
+    "esbuild": "^0.20.0"
+  }
 }
